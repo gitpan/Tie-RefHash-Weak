@@ -1,12 +1,12 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.41.
+signed via the Module::Signature module, version 0.55.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
 
     % cpansign -v
 
-It would check each file's integrity, as well as the signature's
+It will check each file's integrity, as well as the signature's
 validity.  If "==> Signature verified OK! <==" is not displayed,
 the distribution may already have been compromised, and you should
 not run its Makefile.PL or Build.PL.
@@ -14,18 +14,20 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 1c02b39622aee0e9bbbf44fba88adee000aa0ecf Build.PL
-SHA1 fef992530d93c8ca4c68cbe9ab38850b7acad9be MANIFEST
-SHA1 9a9ead2f51d14b0b6c6583d533998228a873c74d META.yml
-SHA1 d3e77d78434a48e572a8b4d45e5c01643d47a7e9 Makefile.PL
-SHA1 e5e534d2eddf7ce3baf9051f6ac129ab6f743117 lib/Tie/RefHash/Weak.pm
+SHA1 aeb2a7afcbd9bf7a6c0489501fe09a808f1b5f75 Changes
+SHA1 a3aabbdad0acbba23dbc6e1d01498a68c5f92e94 MANIFEST
+SHA1 ddb918d4e02cc06f4b9fe77adeca65403f8fdd56 MANIFEST.SKIP
+SHA1 9302e738aacfc3a5e37c0e8caa4135ec2e5bf361 META.yml
+SHA1 01b25e95e805efe21fe8f974ea529154839498a1 Makefile.PL
+SHA1 ecfe66b3856601196eff1bafa051f85ede39ff18 lib/Tie/RefHash/Weak.pm
 SHA1 f9e8c07a9157066789fa124c9240eeda178399e3 t/01basic.t
 SHA1 d9910c6eea013bf9564bb44e3274857b322cef26 t/02gc.t
 SHA1 c04440d94389ed001b94cdec72080305ed7d9648 t/99-distribution.t
+SHA1 e291095ccf408d33daa7fb7c94aaf3b7fd2fec65 t/thread_clone.t
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.5 (Darwin)
+Version: GnuPG v1.4.5 (Darwin)
 
-iD8DBQFBwgSqVCwRwOvSdBgRAulpAJkBZsejlGLseFewYapF8melP77bGgCeL33e
-jfbtbeuA1PwwQ5hhohaU/Bg=
-=xrQf
+iD8DBQFGOl8fVCwRwOvSdBgRAhljAJ9avYKARlmSX7JZ69jusqBlyY1M0ACfY1cV
+g36TacbFVCX7SoDWxA91/lo=
+=tmcn
 -----END PGP SIGNATURE-----

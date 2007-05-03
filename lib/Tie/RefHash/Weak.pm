@@ -8,7 +8,7 @@ use warnings;
 
 use overload ();
 
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 
 use Scalar::Util qw/weaken/;
 
@@ -31,7 +31,9 @@ sub STORE {
 	$s->maybe_purge;
 
 	if (ref $k) {
-		weaken(($s->[0]{overload::StrVal($k)} = [$k, $v])->[0]);
+		# make sure we use the same function that RefHash is using for ref keys
+		my $kstr = Tie::RefHash::refaddr($k);
+		weaken(($s->[0]{$kstr} = [$k, $v])->[0]);
 	}
 	else {
 		$s->[1]{$k} = $v;
@@ -170,6 +172,13 @@ to purge the hash in a more real-time fashion.
 
 =back
 
+=head1 THREAD SAFETY
+
+L<Tie::RefHash> version 1.32 and above have correct handling of threads (with
+respect to changing reference addresses). If your module requires
+Tie::RefHash::Weak to be thread aware you need to depend on both
+L<Tie::RefHash::Weak> and L<Tie::RefHash> version 1.32.
+
 =head1 BUGS
 
 =over 4
@@ -185,9 +194,11 @@ L</Hook Perl_magic_killbackrefs>.
 
 =back
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Yuval Kogman <nothingmuch@woobling.org>
+
+some maintenance by Hans Dieter Pearcey <hdp@pobox.com>
 
 =head1 COPYRIGHT & LICENSE
 
