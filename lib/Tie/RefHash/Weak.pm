@@ -8,7 +8,7 @@ use warnings;
 
 use overload ();
 
-our $VERSION = 0.04;
+our $VERSION = 0.05;
 
 use Scalar::Util qw/weaken reftype/;
 use Variable::Magic qw/wizard cast getdata/;
@@ -18,7 +18,7 @@ my $wiz = wizard free => \&_clear_weakened_sub, data => \&_add_magic_data;
 sub _clear_weakened_sub {
 	my ( $key, $objs ) = @_;
 	foreach my $self ( @{ $objs || [] } ) {
-		$self->_clear_weakened($key); # support subclassing
+		$self->_clear_weakened($key) if defined $self; # support subclassing
 	}
 }
 
@@ -56,14 +56,17 @@ sub STORE {
 		} elsif ( reftype $k eq 'ARRAY' ) {
 			$objects = getdata ( @$k, $wiz )
 				or cast( @$k, $wiz, ( $objects = [] ) );
-		} elsif ( reftype $k eq 'GLOB' ) {
+		} elsif ( reftype $k eq 'GLOB' or reftpe $k eq 'IO' ) {
 			$objects = getdata ( *$k, $wiz )
 				or cast( *$k, $wiz, ( $objects = [] ) );
 		} else {
 			die "patches welcome";
 		}
 
-		push @$objects, $s;
+		unless ( grep { $_ == $s } @$objects ) {
+			push @$objects, $s;
+			weaken($objects->[-1]);
+		}
 
 		$s->[0]{$kstr} = $entry;
 	}
@@ -123,7 +126,11 @@ references there yourself.
 L<Tie::RefHash> version 1.32 and above have correct handling of threads (with
 respect to changing reference addresses). If your module requires
 Tie::RefHash::Weak to be thread aware you need to depend on both
-L<Tie::RefHash::Weak> and L<Tie::RefHash> version 1.32.
+L<Tie::RefHash::Weak> and L<Tie::RefHash> version 1.32 (or later).
+
+Version 0.02 and later of Tie::RefHash::Weak depend on a thread-safe version of
+Tie::RefHash anyway, so if you are using the latest version this should already
+be taken care of for you.
 
 =head1 BUGS
 
