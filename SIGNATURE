@@ -14,12 +14,12 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 26c149e817f26a1eb868e0f727a61efdd8567532 Changes
+SHA1 9a9a6d108a1b7fafdf941c5df84f2653d2027f10 Changes
 SHA1 a3aabbdad0acbba23dbc6e1d01498a68c5f92e94 MANIFEST
 SHA1 ddb918d4e02cc06f4b9fe77adeca65403f8fdd56 MANIFEST.SKIP
-SHA1 fe9715baeaeab15e0f9200045ca47ccb79eebb8d META.yml
+SHA1 4ba74ccf76ff3878a54f50e2ea81608a0d4e35bf META.yml
 SHA1 671cb0205c15d3d680eb7bdc577731c886080282 Makefile.PL
-SHA1 5d7b76996fc021c72c56ecd8851a2597b7b4d580 lib/Tie/RefHash/Weak.pm
+SHA1 f87f3c34779c9af4c51926572a7ce4d9b6949afe lib/Tie/RefHash/Weak.pm
 SHA1 f9e8c07a9157066789fa124c9240eeda178399e3 t/01basic.t
 SHA1 748a3acf9baedcc8b0e2980c8b05bbf8c3f281aa t/02gc.t
 SHA1 c04440d94389ed001b94cdec72080305ed7d9648 t/99-distribution.t
@@ -27,7 +27,7 @@ SHA1 e291095ccf408d33daa7fb7c94aaf3b7fd2fec65 t/thread_clone.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.7 (Darwin)
 
-iD8DBQFG5JqUVCwRwOvSdBgRAnYNAJ4xplxXFJsBxOkrtn0RYPehblpqwQCfZEy5
-Cu5fZW/cvGYvADxzRNJ7Aa0=
-=XpO3
+iD8DBQFG5Z2JVCwRwOvSdBgRAtHfAJ40hXwbsNphNRDrXJML2Ogqt3hvAQCfX9Cl
+BnkFpwygGgUkmdIOMtEya7U=
+=PzUc
 -----END PGP SIGNATURE-----
