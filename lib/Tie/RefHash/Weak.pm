@@ -6,9 +6,13 @@ use base qw/Tie::RefHash/;
 use strict;
 use warnings;
 
+use warnings::register;
+
 use overload ();
 
-our $VERSION = 0.06;
+use B qw/svref_2object CVf_CLONED/;
+
+our $VERSION = 0.07;
 
 use Scalar::Util qw/weaken reftype/;
 use Variable::Magic qw/wizard cast getdata/;
@@ -17,8 +21,9 @@ my $wiz = wizard free => \&_clear_weakened_sub, data => \&_add_magic_data;
 
 sub _clear_weakened_sub {
 	my ( $key, $objs ) = @_;
-	foreach my $self ( @{ $objs || [] } ) {
-		$self->_clear_weakened($key) if defined $self; # support subclassing
+	local $@;
+	foreach my $self ( grep { defined } @{ $objs || [] } ) {
+		eval { $self->_clear_weakened($key) }; # support subclassing
 	}
 }
 
@@ -59,6 +64,13 @@ sub STORE {
 		} elsif ( reftype $k eq 'GLOB' or reftype $k eq 'IO' ) {
 			$objects = getdata ( *$k, $wiz )
 				or cast( *$k, $wiz, ( $objects = [] ) );
+		} elsif ( reftype $k eq 'CODE' ) {
+			unless ( svref_2object($k)->CvFLAGS & CVf_CLONED ) {
+				warnings::warnif("Non closure code references never get garbage collected: $k");
+			} else {
+				$objects = getdata ( &$k, $wiz )
+					or cast( &$k, $wiz, ( $objects = [] ) );
+			}
 		} else {
 			die "patches welcome";
 		}
@@ -131,21 +143,6 @@ L<Tie::RefHash::Weak> and L<Tie::RefHash> version 1.32 (or later).
 Version 0.02 and later of Tie::RefHash::Weak depend on a thread-safe version of
 Tie::RefHash anyway, so if you are using the latest version this should already
 be taken care of for you.
-
-=head1 BUGS
-
-=over 4
-
-=item Value refcount delay
-
-When the key loses it's reference count and goes undef, the value associated
-with that key will not be deleted until the next call to purge, which may be
-significantly later.
-
-Purge manually in critical sections, or implement
-L</Hook Perl_magic_killbackrefs>.
-
-=back
 
 =head1 AUTHORS
 
