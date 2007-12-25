@@ -6,6 +6,8 @@ MANIFEST.SKIP
 META.yml
 t/01basic.t
 t/02gc.t
+t/fieldhash.t
+t/overload.t
 t/thread_clone.t
 TODO
 SIGNATURE                                Public-key signature (added by MakeMaker)
